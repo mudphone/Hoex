@@ -46,4 +46,7 @@ defmodule Hoex do
   def partial(f, a, b), do: curry(f).(a).(b)
   def partial(f, a, b, c), do: curry(f).(a).(b).(c)
   def partial(f, a, b, c, d), do: curry(f).(a).(b).(c).(d)
+
+  def map(f, xs), do: Enum.map(xs, f)
+  def map(f), do: curry(&map/2).(f)
 end
