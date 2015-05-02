@@ -1,4 +1,4 @@
-Hoex
-====
+Hoex - A simple, experimental FP library for Elixir.
+====================================================
 
-** TODO: Add description **
+** I <3 Higher Order Functions
