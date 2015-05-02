@@ -42,4 +42,9 @@ defmodule Hoex do
       f.(b, a)
     end
   end
+
+  def partial(f, a), do: curry(f).(a)
+  def partial(f, a, b), do: curry(f).(a).(b)
+  def partial(f, a, b, c), do: curry(f).(a).(b).(c)
+  def partial(f, a, b, c, d), do: curry(f).(a).(b).(c).(d)
 end

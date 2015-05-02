@@ -5,6 +5,8 @@ defmodule HoexTest do
     def no_op, do: :ok
     def div(a, b), do: a / b
     def div(a, b, c), do: a / b / c
+    def div(a, b, c, d), do: a / b / c / d
+    def div(a, b, c, d, e), do: a / b / c / d / e
     def add(a, b), do: a + b
     def mul(a, b), do: a * b
     def dbl(a), do: a * 2
@@ -61,5 +63,12 @@ defmodule HoexTest do
   test "flipping a function's arguments" do
     f = Hoex.flip(&Mathy.div/2)
     assert f.(2, 10) == 5
+  end
+
+  test "partial application of function arguments" do
+    assert Hoex.partial(&Mathy.div/2, 10).(5) == 2
+    assert Hoex.partial(&Mathy.div/3, 10, 5).(2) == 1
+    assert Hoex.partial(&Mathy.div/4, 10, 2, 2.5).(2) == 1
+    assert Hoex.partial(&Mathy.div/5, 100, 2, 10, 2.5).(2) == 1
   end
 end
