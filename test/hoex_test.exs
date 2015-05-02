@@ -75,7 +75,14 @@ defmodule HoexTest do
   test "composing map with pipes" do
     xs = [1,2,3]
     map_double = Hoex.map(&Mathy.dbl/1)
-    map_inc = Hoex.map(&(&1 + 1))
+    inc = &(&1 + 1)
+    map_inc = Hoex.map(inc)
     assert map_double.(xs) |> map_double.() |> map_inc.() == [5,9,13]
+
+    # Reverse order in writing for same order of composition,
+    # but only requires a single iteration through the array.
+    ddi = Hoex.comp(inc, &Mathy.dbl/1, &Mathy.dbl/1)
+    map_ddi = Hoex.map(ddi)
+    assert xs |> map_ddi.() == [5,9,13]
   end
 end
