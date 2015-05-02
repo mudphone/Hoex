@@ -71,4 +71,10 @@ defmodule HoexTest do
     assert Hoex.partial(&Mathy.div/4, 10, 2, 2.5).(2) == 1
     assert Hoex.partial(&Mathy.div/5, 100, 2, 10, 2.5).(2) == 1
   end
+
+  test "composing with pipes" do
+    xs = [1,2,3]
+    doubling = Hoex.curry(Hoex.flip(&Enum.map/2)).(&Mathy.dbl/1)
+    assert Enum.map(xs, &Mathy.dbl/1) |> doubling.() == [4,8,12]
+  end
 end
