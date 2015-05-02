@@ -22,6 +22,7 @@ defmodule Hoex do
     end
   end
 
+  def comp(f), do: curry(&comp/2).(f)
   def comp(f, g) do
     case arity(g) do
       0 -> fn -> f.(g.()) end

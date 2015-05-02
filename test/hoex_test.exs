@@ -3,6 +3,7 @@ defmodule HoexTest do
 
   defmodule Mathy do
     def no_op, do: :ok
+    def inc(a), do: a + 1
     def div(a, b), do: a / b
     def div(a, b, c), do: a / b / c
     def div(a, b, c, d), do: a / b / c / d
@@ -74,15 +75,35 @@ defmodule HoexTest do
 
   test "composing map with pipes" do
     xs = [1,2,3]
-    map_double = Hoex.map(&Mathy.dbl/1)
-    inc = &(&1 + 1)
+    double = &Mathy.dbl/1
+    inc = &Mathy.inc/1
+
+    map_double = Hoex.map(double)
     map_inc = Hoex.map(inc)
     assert map_double.(xs) |> map_double.() |> map_inc.() == [5,9,13]
+  end
+
+  test "composing map with pipes in a single iteration" do
+    xs = [1,2,3]
+    double = &Mathy.dbl/1
+    inc = &Mathy.inc/1
 
     # Reverse order in writing for same order of composition,
     # but only requires a single iteration through the array.
     # ddi => double, double, increment
-    ddi = Hoex.comp(inc, &Mathy.dbl/1, &Mathy.dbl/1)
+    ddi = Hoex.comp(inc, double, double)
     assert xs |> Hoex.map(ddi).() == [5,9,13]
+  end
+
+  test "composing map and pipes, in forward order" do
+    xs = [1,2,3]
+    double = &Mathy.dbl/1
+    inc = &Mathy.inc/1
+
+    # To write fn composition in right-to-left order,
+    # remember that |> works on fns too.
+    comp_double = Hoex.comp(double)
+    comp_inc = Hoex.comp(inc)
+    assert xs |> Hoex.map(double |> comp_double.() |> comp_inc.()).() == [5,9,13]
   end
 end
