@@ -81,6 +81,7 @@ defmodule HoexTest do
 
     # Reverse order in writing for same order of composition,
     # but only requires a single iteration through the array.
+    # ddi => double, double, increment
     ddi = Hoex.comp(inc, &Mathy.dbl/1, &Mathy.dbl/1)
     map_ddi = Hoex.map(ddi)
     assert xs |> map_ddi.() == [5,9,13]
