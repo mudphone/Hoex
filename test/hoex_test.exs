@@ -58,7 +58,7 @@ defmodule HoexTest do
     assert Hoex.comp(f,f,f,f,f).(2) == 64
   end
 
-  test "flipping a functions arguments" do
+  test "flipping a function's arguments" do
     f = Hoex.flip(&Mathy.div/2)
     assert f.(2, 10) == 5
   end
