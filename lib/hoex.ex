@@ -36,4 +36,9 @@ defmodule Hoex do
   def comp(f, g, h, i), do: comp(f, g, comp(h, i))
   def comp(f, g, h, i, j), do: comp(f, g, h, comp(i, j))
 
+  def flip(f) do
+    fn a, b ->
+      f.(b, a)
+    end
+  end
 end

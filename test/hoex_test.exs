@@ -3,6 +3,7 @@ defmodule HoexTest do
 
   defmodule Mathy do
     def no_op, do: :ok
+    def div(a, b), do: a / b
     def div(a, b, c), do: a / b / c
     def add(a, b), do: a + b
     def mul(a, b), do: a * b
@@ -57,4 +58,8 @@ defmodule HoexTest do
     assert Hoex.comp(f,f,f,f,f).(2) == 64
   end
 
+  test "flipping a functions arguments" do
+    f = Hoex.flip(&Mathy.div/2)
+    assert f.(2, 10) == 5
+  end
 end
