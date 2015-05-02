@@ -6,6 +6,7 @@ defmodule HoexTest do
     def div(a, b, c), do: a / b / c
     def add(a, b), do: a + b
     def mul(a, b), do: a * b
+    def dbl(a), do: a * 2
   end
 
   test "arity calculation" do
@@ -29,10 +30,31 @@ defmodule HoexTest do
   end
 
   test "compose 2 functions" do
+    f = &Mathy.dbl/1
     g = &Mathy.add/2
-    f = &(&1 / 2)
     c = Hoex.comp(f, g)
-    assert c.(10, 2) == 6.0
+    assert c.(10, 2) == 24.0
+  end
+
+  test "compose function w/ variable number of args" do
+    f = &Mathy.dbl/1
+    assert Hoex.comp(f, &Mathy.div/3).(10,5,2) == 2
+    assert Hoex.comp(f, f).(2) == 8
+  end
+
+  test "composing 3 functions" do
+    f = &Mathy.dbl/1
+    assert Hoex.comp(f, f, f).(2) == 16
+  end
+
+  test "composing 4 functions" do
+    f = &Mathy.dbl/1
+    assert Hoex.comp(f,f,f,f).(2) == 32
+  end
+
+  test "composing 5 functions" do
+    f = &Mathy.dbl/1
+    assert Hoex.comp(f,f,f,f,f).(2) == 64
   end
 
 end
