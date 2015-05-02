@@ -100,7 +100,7 @@ defmodule HoexTest do
     double = &Mathy.dbl/1
     inc = &Mathy.inc/1
 
-    # To write fn composition in right-to-left order,
+    # To write fn composition in left-to-right order,
     # remember that |> works on fns too.
     comp_double = Hoex.comp(double)
     comp_inc = Hoex.comp(inc)
