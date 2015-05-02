@@ -32,7 +32,6 @@ defmodule Hoex do
       5 -> fn a, b, c, d, e -> f.(g.(a,b,c,d,e)) end
     end
   end
-
   def comp(f, g, h), do: comp(f, comp(g, h))
   def comp(f, g, h, i), do: comp(f, g, comp(h, i))
   def comp(f, g, h, i, j), do: comp(f, g, h, comp(i, j))
