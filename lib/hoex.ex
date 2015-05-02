@@ -1,8 +1,9 @@
 defmodule Hoex do
 
-  def arity(f) when is_function(f), do: arity(f, 0)
-  defp arity(f, n) when is_function(f, n), do: n
-  defp arity(f, n), do: arity(f, n+1)
+  def arity(f) do
+    {:arity, n} = :erlang.fun_info(f, :arity)
+    n
+  end
 
   defp curryize(f, 0, args) do
     apply(f, args)
