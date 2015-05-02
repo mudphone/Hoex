@@ -21,4 +21,9 @@ defmodule Hoex do
     end
   end
 
+  def comp(f, g) do
+    fn a, b ->
+      f.(g.(a, b))
+    end
+  end
 end

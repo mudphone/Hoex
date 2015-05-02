@@ -4,6 +4,8 @@ defmodule HoexTest do
   defmodule Mathy do
     def no_op, do: :ok
     def div(a, b, c), do: a / b / c
+    def add(a, b), do: a + b
+    def mul(a, b), do: a * b
   end
 
   test "arity calculation" do
@@ -24,6 +26,13 @@ defmodule HoexTest do
   test "curry of a arity 0 function" do
     f = Hoex.curry(&Mathy.no_op/0)
     assert f.() == Mathy.no_op
+  end
+
+  test "compose 2 functions" do
+    g = &Mathy.add/2
+    f = &(&1 / 2)
+    c = Hoex.comp(f, g)
+    assert c.(10, 2) == 6.0
   end
 
 end
