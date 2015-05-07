@@ -50,4 +50,5 @@ defmodule Hoex do
 
   def map(f, xs), do: Enum.map(xs, f)
   def map(f), do: curry(&map/2).(f)
+
 end
