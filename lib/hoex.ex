@@ -26,11 +26,11 @@ defmodule Hoex do
   def comp(f, g) do
     case arity(g) do
       0 -> fn -> f.(g.()) end
-      1 -> fn a -> f.(g.(a)) end
-      2 -> fn a, b -> f.(g.(a,b)) end
-      3 -> fn a, b, c -> f.(g.(a,b,c)) end
-      4 -> fn a, b, c, d -> f.(g.(a,b,c,d)) end
-      5 -> fn a, b, c, d, e -> f.(g.(a,b,c,d,e)) end
+      1 -> &f.(g.(&1))
+      2 -> &f.(g.(&1,&2))
+      3 -> &f.(g.(&1,&2,&3))
+      4 -> &f.(g.(&1,&2,&3,&4))
+      5 -> &f.(g.(&1,&2,&3,&4,&5))
     end
   end
   def comp(f, g, h), do: comp(f, comp(g, h))
